@@ -456,50 +456,65 @@
       </div>
     </footer>
     <script>
-      //console.log(window);
-      //window.alert("아이디가 맞지 않습니다.");
-      //dom  (document object model);
-
-      //f(x) = x+5;
-
-      function plus5() {
-        console.log(x + 5);
-      }
-      function bank(money) {
-        console.log(money * 1.045);
-      }
+      // 찾아서 이벤트 걸고 제어하면 된다.
+      // vanilla script   jQuery
+      const btnAll = document.querySelector(".btn--all");
       const header = document.querySelector(".header");
-      const gnb = document.querySelector(".gnb");
-      gnb.addEventListener("mouseenter", function () {
-        header.classList.add("on");
-      });
-      gnb.addEventListener("mouseleave", function () {
-        header.classList.remove("on");
-      });
+      const depth01 = document.querySelectorAll(".gnb .gnb__list > li > a");
+      const depth02 = document.querySelectorAll(
+        ".gnb .gnb__list > li > .gnb__list--sub"
+      );
+      const total = depth01.length;
+      for (let i = 0; i < total; i++) {
+        depth01[i].addEventListener("click", function (e) {
+          e.preventDefault();
+          // depth02[0].classList.remove("on");
+          // depth02[1].classList.remove("on");
+          // depth02[2].classList.remove("on");
+          // depth02[3].classList.remove("on");
+          // depth02[4].classList.remove("on");
+          // depth02[5].classList.remove("on");
+          for (let j = 0; j < total; j++) {
+            if (i !== j) {
+              depth02[j].classList.remove("on");
+            }
+          }
+          depth02[i].classList.toggle("on");
+        });
+      }
 
-      const swiper = new Swiper(".platform-swiper", {
-        slidesPerView: "5",
-        spaceBetween: 50,
-        loop: true,
-        navigation: {
-          nextEl: ".platform-swiper .btn--next",
-          prevEl: ".platform-swiper .btn--prev",
-        },
-      });
+      // for (let i = 0; i < 6; i++) {
+      //   depth01[i].addEventListener("click", function (e) {
+      //     e.preventDefault();
+      //     //depth02.classList.toggle("on");
+      //     console.log(i);
+      //   });
+      // }
 
-      window.addEventListener("scroll", function () {
-        console.log(window.scrollY);
-        if (window.scrollY > 0) {
-          header.classList.add("scroll");
-        } else {
-          header.classList.remove("scroll");
-        }
-      });
-
-      // window.addEventListener("scroll", function () {
-      //
+      // depth01.addEventListener("click", function (e) {
+      //   e.preventDefault();
+      //   depth02.classList.toggle("on");
+      //   //return false;
       // });
-      // throttle, debounce;
+
+      btnAll.addEventListener("click", function () {
+        // console.log("click 했음");
+        const isContains = header.classList.contains("on");
+        if (isContains) {
+          header.classList.remove("on");
+          setTimeout(function () {
+            for (let i = 0; i < total; i++) {
+              depth02[i].classList.remove("on");
+            }
+          }, 250);
+        } else {
+          header.classList.add("on");
+        }
+        //header.classList.toggle("on");
+        //console.log(isContains);
+        //header.classList.add("on");
+        //header.classList.remove("on");
+      });
     </script>
   </body>
 </html>
